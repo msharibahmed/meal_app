@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import './pages/category_meals.dart';
 import 'pages/categories.dart';
 
 void main() {
@@ -18,11 +20,15 @@ class MyApp extends StatelessWidget {
             bodyText2: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
             bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
             headline6: TextStyle(
-                fontSize: 24.0,
+                fontSize: 20.0,
                 fontFamily: 'RobotoCondensed',
                 fontWeight: FontWeight.bold)),
       ),
-      home: Categories(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Categories(),
+        CategoryMeals.namedRoute: (context) => CategoryMeals()
+      },
     );
   }
 }
