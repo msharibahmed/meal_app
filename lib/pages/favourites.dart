@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 class Favourites extends StatefulWidget {
+  static const namedRoute = '/favourites';
   @override
   _FavouritesState createState() => _FavouritesState();
 }

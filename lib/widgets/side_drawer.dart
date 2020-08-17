@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:meal_app/pages/filters.dart';
 
 class SideDrawer extends StatelessWidget {
   @override
@@ -24,12 +26,17 @@ class SideDrawer extends StatelessWidget {
         Divider(
           height: 0,
         ),
-        const ListTile(
+         ListTile(
+          onTap: ()=>drawerListFilterTap(context),
           leading: const Icon(Icons.settings),
           title: const Text('Filters',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
         )
       ],
     ));
+  }
+  void drawerListFilterTap(BuildContext context){
+    
+            Navigator.of(context).pushNamed(Filters.namedRoute);
   }
 }

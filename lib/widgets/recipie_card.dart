@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/meal.dart';
+import 'package:meal_app/pages/meal_details.dart';
 
 class RecipieCard extends StatelessWidget {
   final String id;
@@ -55,10 +56,16 @@ class RecipieCard extends StatelessWidget {
     }
   }
 
+  void categoryListCardTap(BuildContext context) {
+    Navigator.of(context).pushNamed(MealDetails.namedRoute,arguments: 
+    {'imageUrl':imageUrl,'steps':steps,'ingredients':ingredients,'title':title
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: ()=>categoryListCardTap(context),
       splashColor: Colors.amber,
       borderRadius: BorderRadius.circular(5),
       child: Card(
@@ -108,7 +115,7 @@ class RecipieCard extends StatelessWidget {
                       SizedBox(
                         width: 6,
                       ),
-                      Text(duration.toString())
+                      Text('$duration' + 'min')
                     ],
                   ),
                   Row(

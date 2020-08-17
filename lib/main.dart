@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/pages/favourites.dart';
+import 'package:meal_app/pages/meal_details.dart';
 
 import './pages/category_meals.dart';
 import 'pages/categories.dart';
+import './pages/filters.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +30,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Categories(),
+        Favourites.namedRoute:(xontext)=>Favourites(),
+        MealDetails.namedRoute: (context) => MealDetails(),
+        Filters.namedRoute: (context) => Filters(),
         CategoryMeals.namedRoute: (context) => CategoryMeals()
       },
     );
