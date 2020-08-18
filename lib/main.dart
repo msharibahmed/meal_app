@@ -30,10 +30,20 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Categories(),
-        Favourites.namedRoute:(xontext)=>Favourites(),
+        Favourites.namedRoute: (xontext) => Favourites(),
         MealDetails.namedRoute: (context) => MealDetails(),
         Filters.namedRoute: (context) => Filters(),
         CategoryMeals.namedRoute: (context) => CategoryMeals()
+      },
+      // onGenerateRoute: (RouteSettings settings) {
+      //   print(settings.arguments);
+      //    if (settings.name == '/meals-details') {
+      //      return MaterialPageRoute(builder: (context) => Categories());
+      //    }
+      //    return MaterialPageRoute(builder: (context) => Categories());
+      // },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => Categories());
       },
     );
   }

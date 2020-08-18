@@ -5,6 +5,27 @@ class MealsDetailCard extends StatelessWidget {
   final List ingredients;
   final List steps;
   MealsDetailCard(this.imageUrl, this.ingredients, this.steps);
+  Padding mealDetailsPaddingBuild(String name) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Center(
+          child: Text(
+        name,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      )),
+    );
+  }
+
+  Container mealDetailsListBuild(double width, Widget child) {
+    return Container(
+      decoration: BoxDecoration(border: Border.all(), color: Colors.black12),
+      height: 175,
+      width: width,
+      child: Card(elevation: 5, child: child),
+      margin: EdgeInsets.only(bottom: 10),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,50 +37,44 @@ class MealsDetailCard extends StatelessWidget {
               imageUrl,
               fit: BoxFit.cover,
             )),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Center(
-              child: Text(
-            'Ingredients',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          )),
-        ),
-        Center(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ingredients
-                      .map((e) => Container(
-                            decoration: BoxDecoration(color: Colors.amber),
-                            child: Text('${ingredients.indexOf(e) + 1}.\t'+e,
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w500)),
-                          ))
-                      .toList()),
-            ),
+        mealDetailsPaddingBuild('Ingredients'),
+        mealDetailsListBuild(
+          200,
+          ListView.builder(
+            itemCount: ingredients.length,
+            itemBuilder: (context, index) {
+              return Card(
+                  elevation: 10,
+                  shadowColor: Colors.amber,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(), color: Colors.amberAccent),
+                    child: Text('${index + 1}.\t' + ingredients[index],
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoCondensed')),
+                  ));
+            },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Center(
-              child: Text('Steps',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-        ),
-        Center(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: steps
-                    .map((e) => Text('${steps.indexOf(e) + 1}.\t'+e,
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500)))
-                    .toList(),
-              ),
-            ),
+        mealDetailsPaddingBuild('Steps'),
+        mealDetailsListBuild(
+          320,
+          ListView.builder(
+            itemCount: steps.length,
+            itemBuilder: (context, index) {
+              return Column(
+                              children: [ListTile(
+                    leading: CircleAvatar(child: Text('#${index + 1}')),
+                    title: Text(steps[index],
+           style: TextStyle(
+                 fontSize: 15,
+                 fontWeight: FontWeight.bold,
+                 fontFamily: 'RobotoCondensed')),),
+                 Divider()]
+              );
+            },
           ),
         ),
       ],
