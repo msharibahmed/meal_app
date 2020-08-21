@@ -13,17 +13,18 @@ class RecipieCard extends StatelessWidget {
   final String imageUrl;
   final Complexity complexity;
   final Affordability affordability;
-  RecipieCard({
-    @required this.id,
-    @required this.title,
-    @required this.categories,
-    @required this.ingredients,
-    @required this.steps,
-    @required this.duration,
-    @required this.imageUrl,
-    @required this.complexity,
-    @required this.affordability,
-  });
+  final Function removeRecipeItem;
+  RecipieCard(
+      {@required this.id,
+      @required this.title,
+      @required this.categories,
+      @required this.ingredients,
+      @required this.steps,
+      @required this.duration,
+      @required this.imageUrl,
+      @required this.complexity,
+      @required this.affordability,
+      @required this.removeRecipeItem});
   String get complexityGet {
     switch (complexity) {
       case Complexity.Simple:
@@ -57,15 +58,24 @@ class RecipieCard extends StatelessWidget {
   }
 
   void categoryListCardTap(BuildContext context) {
-    Navigator.of(context).pushNamed(MealDetails.namedRoute,arguments: 
-    {'imageUrl':imageUrl,'steps':steps,'ingredients':ingredients,'title':title
+    Navigator.of(context).pushNamed(MealDetails.namedRoute, arguments: {
+      'imageUrl': imageUrl,
+      'steps': steps,
+      'ingredients': ingredients,
+      'title': title,
+      'id': id
+    }).then((result) {
+      print(result);
+      if (result != null) {
+         removeRecipeItem(result);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()=>categoryListCardTap(context),
+      onTap: () => categoryListCardTap(context),
       splashColor: Colors.amber,
       borderRadius: BorderRadius.circular(5),
       child: Card(

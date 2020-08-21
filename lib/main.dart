@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/pages/favourites.dart';
-import 'package:meal_app/pages/meal_details.dart';
 
+import 'models/meal.dart';
+import './dummy_data.dart';
+import './pages/favourites.dart';
+import './pages/meal_details.dart';
+import './pages/tabBarScreen.dart';
 import './pages/category_meals.dart';
 import 'pages/categories.dart';
 import './pages/filters.dart';
@@ -10,7 +13,41 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String, bool> filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false,
+  };
+
+  List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> favoriteMeals = [];
+
+  void _setFilters(Map<String, bool> filterData) {
+    filters = filterData;
+    _availableMeals = DUMMY_MEALS.where((element) {
+      if (filters['gluten'] && !element.isGlutenFree) {
+        return false;
+      }
+      if (filters['lactose'] && !element.isLactoseFree) {
+        return false;
+      }
+      if (filters['vegan'] && !element.isVegan) {
+        return false;
+      }
+      if (filters['vegetarian'] && !element.isVegetarian) {
+        return false;
+      }
+      return true;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,11 +66,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Categories(),
+        '/': (context) => TabBarScreen(),
         Favourites.namedRoute: (xontext) => Favourites(),
         MealDetails.namedRoute: (context) => MealDetails(),
-        Filters.namedRoute: (context) => Filters(),
-        CategoryMeals.namedRoute: (context) => CategoryMeals()
+        Filters.namedRoute: (context) => Filters(filters, _setFilters),
+        CategoryMeals.namedRoute: (context) => CategoryMeals(_availableMeals)
       },
       // onGenerateRoute: (RouteSettings settings) {
       //   print(settings.arguments);

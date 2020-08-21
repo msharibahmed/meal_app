@@ -1,8 +1,17 @@
-
 import 'package:flutter/material.dart';
-import 'package:meal_app/pages/filters.dart';
+
+import '../pages/filters.dart';
 
 class SideDrawer extends StatelessWidget {
+  ListTile drawerListTile(String name, Widget icon, Function onTap) {
+    return ListTile(
+      leading: icon,
+      onTap: onTap,
+      title: Text(name,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,6 +20,7 @@ class SideDrawer extends StatelessWidget {
         DrawerHeader(
             padding: EdgeInsets.all(0),
             child: Container(
+              height: 250,
               color: Color(0xFFFFB300),
               child: Center(
                   child: Text(
@@ -18,25 +28,14 @@ class SideDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 40, color: Color(0xFFB71C1c)),
               )),
             )),
-        ListTile(
-          leading: Icon(Icons.markunread_mailbox),
-          title: Text('Meals',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
-        ),
-        Divider(
-          height: 0,
-        ),
-         ListTile(
-          onTap: ()=>drawerListFilterTap(context),
-          leading: const Icon(Icons.settings),
-          title: const Text('Filters',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
-        )
+        drawerListTile('Meals', Icon(Icons.restaurant), () {
+          Navigator.of(context).pushReplacementNamed('/');
+        }),
+        Divider(),
+        drawerListTile('Filters', Icon(Icons.settings), () {
+          Navigator.of(context).pushReplacementNamed(Filters.namedRoute);
+        }),
       ],
     ));
-  }
-  void drawerListFilterTap(BuildContext context){
-    
-            Navigator.of(context).pushNamed(Filters.namedRoute);
   }
 }
