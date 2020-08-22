@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'models/meal.dart';
 import './dummy_data.dart';
-import './pages/favourites.dart';
 import './pages/meal_details.dart';
 import './pages/tabBarScreen.dart';
 import './pages/category_meals.dart';
-import 'pages/categories.dart';
+import './pages/categories.dart';
 import './pages/filters.dart';
 
 void main() {
@@ -48,6 +47,25 @@ class _MyAppState extends State<MyApp> {
     }).toList();
   }
 
+  void toggleFavorite(String mealId) {
+    final existingIndex =
+        favoriteMeals.indexWhere((element) => element.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        favoriteMeals
+            .add(DUMMY_MEALS.firstWhere((element) => element.id == mealId));
+      });
+    }
+  }
+
+  bool isFavorite(String id) {
+    return (favoriteMeals.any((element) => element.id == id));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,9 +84,9 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => TabBarScreen(),
-        Favourites.namedRoute: (xontext) => Favourites(),
-        MealDetails.namedRoute: (context) => MealDetails(),
+        '/': (context) => TabBarScreen(favoriteMeals),
+        MealDetails.namedRoute: (context) =>
+            MealDetails(isFavorite, toggleFavorite),
         Filters.namedRoute: (context) => Filters(filters, _setFilters),
         CategoryMeals.namedRoute: (context) => CategoryMeals(_availableMeals)
       },

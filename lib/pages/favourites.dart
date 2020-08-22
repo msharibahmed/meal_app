@@ -1,28 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/widgets/recipie_card.dart';
 
-class Favourites extends StatefulWidget {
+import '../models/meal.dart';
+
+class Favourites extends StatelessWidget {
   static const namedRoute = '/favourites';
-  @override
-  _FavouritesState createState() => _FavouritesState();
-}
+  final List<Meal> favoriteMeal;
+  Favourites(this.favoriteMeal);
 
-class _FavouritesState extends State<Favourites> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Favourite Meals'),
       ),
-      body: FavouriteList(),
+      body: FavouriteList(favoriteMeal),
     );
   }
 }
 
 class FavouriteList extends StatelessWidget {
+  final List<Meal> favoriteMeal;
+  FavouriteList(this.favoriteMeal);
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(child: Text('Add Your Favourite Meal')),
-    );
+    if (favoriteMeal.isEmpty) {
+      return Center(child: Text('No favorites added'));
+    } else {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return RecipieCard(
+            id: favoriteMeal[index].id,
+            title: favoriteMeal[index].title,
+            imageUrl: favoriteMeal[index].imageUrl,
+            duration: favoriteMeal[index].duration,
+            affordability: favoriteMeal[index].affordability,
+            complexity: favoriteMeal[index].complexity,
+            categories: favoriteMeal[index].categories,
+            ingredients: favoriteMeal[index].ingredients,
+            steps: favoriteMeal[index].steps,
+            // removeRecipeItem: removeRecipeMethod,
+          );
+        },
+        itemCount: favoriteMeal.length,
+      );
+    }
   }
 }

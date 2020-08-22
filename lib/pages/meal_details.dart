@@ -3,6 +3,9 @@ import 'package:meal_app/widgets/meals_detail_card.dart';
 
 class MealDetails extends StatelessWidget {
   static const namedRoute = '/meal-details';
+  final Function isFavorite;
+  final Function toggleFavorite;
+  MealDetails(this.isFavorite, this.toggleFavorite);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +31,18 @@ class MealDetails extends StatelessWidget {
         mini: true,
         backgroundColor: Colors.amber,
         onPressed: () {
-          Navigator.of(context).pop(id);
+          toggleFavorite(id);
+          /*Navigator.of(context).pop(id);*/
         },
-        child: Icon(Icons.star_border),
+        child: isFavorite(id)
+            ? Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )
+            : Icon(
+                Icons.favorite_border,
+                color: Colors.red,
+              ),
       ),
       appBar: AppBar(
         title: Text(title),

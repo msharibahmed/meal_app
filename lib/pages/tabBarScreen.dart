@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/models/meal.dart';
 
 import './favourites.dart';
 import './categories.dart';
 
 class TabBarScreen extends StatefulWidget {
+  final List<Meal> favoriteMeals;
+  TabBarScreen(this.favoriteMeals);
   @override
   _TabBarScreenState createState() => _TabBarScreenState();
 }
 
 class _TabBarScreenState extends State<TabBarScreen> {
+  List screens;
   int _selectedIndex = 0;
   void _bottomNavbarOntap(index) {
     setState(() {
@@ -16,7 +20,15 @@ class _TabBarScreenState extends State<TabBarScreen> {
     });
   }
 
-  List screens = [Categories(), Favourites()];
+  @override
+  void initState() {
+    super.initState();
+   screens = [
+      Categories(),
+      Favourites(widget.favoriteMeals)
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

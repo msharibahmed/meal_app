@@ -80,7 +80,7 @@ class _CategoryMealsState extends State<CategoryMeals> {
                 categories: categoryMeals[index].categories,
                 ingredients: categoryMeals[index].ingredients,
                 steps: categoryMeals[index].steps,
-                removeRecipeItem: removeRecipeMethod,
+                // removeRecipeItem: removeRecipeMethod,
               );
             },
             childCount: categoryMeals.length,

@@ -13,7 +13,7 @@ class RecipieCard extends StatelessWidget {
   final String imageUrl;
   final Complexity complexity;
   final Affordability affordability;
-  final Function removeRecipeItem;
+  // final Function removeRecipeItem;
   RecipieCard(
       {@required this.id,
       @required this.title,
@@ -24,7 +24,8 @@ class RecipieCard extends StatelessWidget {
       @required this.imageUrl,
       @required this.complexity,
       @required this.affordability,
-      @required this.removeRecipeItem});
+      // @required this.removeRecipeItem
+      });
   String get complexityGet {
     switch (complexity) {
       case Complexity.Simple:
@@ -64,12 +65,14 @@ class RecipieCard extends StatelessWidget {
       'ingredients': ingredients,
       'title': title,
       'id': id
-    }).then((result) {
-      print(result);
-      if (result != null) {
-         removeRecipeItem(result);
-      }
-    });
+    })
+    // .then((result) {
+    //   print(result);
+    //   if (result != null) {
+    //      removeRecipeItem(result);
+    //   }
+    // })
+    ;
   }
 
   @override
